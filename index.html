@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Selling | आपकी वेबसाइट के ऑर्डर</title>
+    <meta name="google-site-verification" content="BWf3BEIlUHmIRPrfIcmtYle8NcZOOb9zjcADe6dZwpc" />
+    <!-- Google Fonts: Inter - Professional look के लिए -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=100..900&display=swap" rel="stylesheet">
+    <style>
+        /* BASE STYLES & RESET */
+        :root {
+            --primary-color: #10b981; /* Teal Accent */
+            --secondary-color: #0d9488;
+            --background-dark: #1f2937; /* Dark Gray/Blue Background */
+            --card-dark: #374151; /* Slightly lighter card background */
+            --text-light: #f3f4f6;
+            --border-radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* HEADER & LOGO */
+        header {
+            width: 100%;
+            background-color: var(--card-dark);
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* MAIN CONTENT - WEBSITE TYPES */
+        main {
+            padding: 2rem 1rem;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            font-weight: 800;
+        }
+
+        .website-grid {
+            display: flex;
+            flex-direction: column; /* Mobile first: stack vertically */
+            gap: 1.5rem;
+        }
+
+        .website-card {
+            background-color: var(--card-dark);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 1px solid var(--card-dark);
+        }
+
+        .website-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.5), 0 6px 10px -3px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .website-card h2 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .website-card p {
+            color: #d1d5db;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        /* MEDIA QUERY for Desktop/Tablet */
+        @media (min-width: 768px) {
+            .website-grid {
+                flex-direction: row; /* Desktop: three columns */
+            }
+            .website-card {
+                flex: 1;
+            }
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--background-dark);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        /* MODAL STYLES */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background-color: var(--background-dark);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.7);
+            position: relative;
+        }
+
+        .modal-content h3 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        .close-btn:hover {
+            opacity: 1;
+        }
+
+        /* SAMPLE OPTIONS */
+        .sample-option {
+            background-color: var(--card-dark);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid transparent;
+            transition: border-left 0.3s, background-color 0.3s;
+        }
+
+        .sample-option:hover {
+            background-color: #4b5563;
+        }
+        
+        .classic-option {
+            border-left-color: #f59e0b; /* Yellow/Gold for Classic */
+        }
+
+        .premium-option {
+            border-left-color: #ef4444; /* Red for Premium */
+        }
+
+        .sample-details h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .sample-details .price {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.4rem;
+        }
+        
+        /* QR CODE MODAL */
+        .qr-section {
+            text-align: center;
+        }
+        
+        .qr-section p {
+            margin-bottom: 1rem;
+            color: #d1d5db;
+        }
+
+        .qr-section img {
+            width: 250px;
+            height: 250px;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            border: 5px solid var(--primary-color);
+            object-fit: contain;
+        }
+        
+        .qr-instruction {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #f59e0b;
+            font-weight: 500;
+        }
+
+        /* FOOTER & SOCIAL MEDIA */
+        .social-services {
+            background-color: var(--card-dark);
+            width: 100%;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-services h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .social-links a {
+            color: var(--text-light);
+            font-size: 2rem;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Icon Font for Social Media */
+        /* Font Awesome for social media icons */
+        @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css");
+    </style>
+</head>
+<body>
+
+    <!-- Header Section (Logo and Name) -->
+    <header>
+        <div class="logo-container">
+            <span class="logo">✦</span>
+            <h1>Website Desiner</h1>
+        </div>
+    </header>
+
+    <!-- Main Content Section: Website Types -->
+    <main>
+        <h2 class="section-title">अपनी वेबसाइट का प्रकार चुनें</h2>
+
+        <div class="website-grid">
+            <!-- E-commerce Card -->
+            <div class="website-card" onclick="showSamples('E-commerce')">
+                <h2>1. E-commerce Website</h2>
+                <p>खरीद-बिक्री के लिए शक्तिशाली ऑनलाइन स्टोर।</p>
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #4b5563;">
+                    <p style="font-size: 0.85rem; text-align: left; color: #9ca3af;">
+                        <span style="font-weight: 600; color: var(--primary-color);">विवरण:</span> प्रोडक्ट्स लिस्टिंग, पेमेंट गेटवे इंटीग्रेशन, इन्वेंटरी मैनेजमेंट, सुरक्षित चेकआउट। छोटे से बड़े व्यापार के लिए उपयुक्त।
+                    </p>
+                </div>
+            </div>
+
+            <!-- Blog Website Card -->
+            <div class="website-card" onclick="showSamples('Blog')">
+                <h2>2. Blog Website</h2>
+                <p>अपने विचार, कहानियाँ और ज्ञान दुनिया के साथ साझा करें।</p>
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #4b5563;">
+                    <p style="font-size: 0.85rem; text-align: left; color: #9ca3af;">
+                        <span style="font-weight: 600; color: var(--primary-color);">विवरण:</span> आकर्षक डिज़ाइन, कमेंट सिस्टम, SEO ऑप्टिमाइजेशन, आसान कंटेंट पब्लिशिंग और कैटेगरी मैनेजमेंट।
+                    </p>
+                </div>
+            </div>
+
+            <!-- Custom Website Card -->
+            <div class="website-card" onclick="showSamples('Custom')">
+                <h2>3. Client's Choice (Custom)</h2>
+                <p>आपके मनपसंद डिज़ाइन और फीचर्स वाली वेबसाइट।</p>
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #4b5563;">
+                    <p style="font-size: 0.85rem; text-align: left; color: #9ca3af;">
+                        <span style="font-weight: 600; color: var(--primary-color);">विवरण:</span> अपनी ज़रूरतों के अनुसार विशिष्ट फीचर्स, कस्टम लेआउट, और आपकी कल्पना के अनुसार कोई भी कार्यक्षमता।
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section: Social Services -->
+    <footer class="social-services">
+        <h2>Social Services</h2>
+        <div class="social-links">
+            <!-- Instagram Link -->
+            <a href="https://www.instagram.com/" target="_blank" title="Instagram Link">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <!-- YouTube Link -->
+            <a href="https://www.youtube.com/" target="_blank" title="YouTube Link">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.8rem; color: #9ca3af;">© 2025 Website Selling. copyrights reserved 2025 to 2030.</p>
+    </footer>
+
+    <!-- MODAL 1: Samples Selection -->
+    <div id="samplesModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('samplesModal')">&times;</button>
+            <h3 id="sampleModalTitle">वेबसाइट विकल्प</h3>
+            
+            <!-- Classic Option (₹399) -->
+            <div class="sample-option classic-option">
+                <div class="sample-details">
+                    <h4>Classic (क्लासिक)</h4>
+                    <span class="price">₹399</span>
+                </div>
+                <!-- Updated: Now calls showPayment -->
+                <button class="btn btn-primary" onclick="showPayment('Classic', 399)">ऑर्डर करें</button>
+            </div>
+
+            <!-- High Premium Option (₹999) -->
+            <div class="sample-option premium-option">
+                <div class="sample-details">
+                    <h4>High Premium (हाई प्रीमियम)</h4>
+                    <span class="price">₹999</span>
+                </div>
+                <!-- Updated: Now calls showPayment -->
+                <button class="btn btn-primary" onclick="showPayment('High Premium', 999)">ऑर्डर करें</button>
+            </div>
+            <p class="qr-instruction" style="text-align: center;">*ऑर्डर करें पर क्लिक करने पर पेमेंट QR कोड खुलेगा।</p>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Payment QR Code -->
+    <div id="paymentModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('paymentModal')">&times;</button>
+            <h3 id="paymentModalTitle">ऑर्डर: पेमेंट करें</h3>
+            
+            <div class="qr-section">
+                <p>अपनी पेमेंट ऐप (जैसे: फेम पे) का इस्तेमाल करके नीचे दिए गए QR कोड को स्कैन करें।</p>
+                
+                <!-- QR Code Placeholder - User Must Replace SRC -->
+                <img id="qrCodeImage" 
+                     src="https://i.ibb.co/SwBjgt3n/IMG-20251022-184536.jpg?text=Fame+Pay+QR+Code" 
+                     alt="पेमेंट QR कोड"
+                     onerror="this.src='https://placehold.co/300x300/10B981/ffffff?text=QR+Code+Error';"
+                >
+                
+                <!-- Dynamic Instruction for Price -->
+                <p id="qrPriceInstruction" class="qr-instruction">
+                    ध्यान दें: यह एक प्लेसहोल्डर QR कोड है। आपको अपने "Fame Pay App" QR कोड का URL इस `src` टैग में बदलना होगा।
+                </p>
+                
+                <!-- Dynamic Price Display -->
+                <p style="margin-top: 1.5rem; font-weight: 600;">भुगतान राशि: <span id="paymentAmountDisplay" style="color: var(--primary-color);">₹399</span></p>
+
+                <button class="btn btn-primary" onclick="handlePaymentDone()">
+                    पेमेंट हो गया, स्क्रीनशॉट भेजें
+                </button>
+                <div style="font-size: 0.9rem; margin-top: 10px; color: #9ca3af;">पेमेंट होने के बाद इस बटन पर क्लिक करें।</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        // Global variables to store current selection and price dynamically
+        let currentWebsiteType = '';
+        let currentSampleName = '';
+        let currentPrice = 0;
+        const whatsappNumber = '917052830767'; // Including 91 for India code
+
+        // --- Utility Functions ---
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'flex';
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // --- Main Logic Functions ---
+
+        function showSamples(type) {
+            currentWebsiteType = type;
+            const title = document.getElementById('sampleModalTitle');
+            title.textContent = `${type} वेबसाइट के लिए विकल्प`;
+            openModal('samplesModal');
+        }
+
+        function showPayment(sampleName, price) {
+            closeModal('samplesModal'); // Close samples modal
+            
+            // Set global variables for dynamic content and WhatsApp message
+            currentSampleName = sampleName;
+            currentPrice = price;
+
+            const title = document.getElementById('paymentModalTitle');
+            const priceDisplay = document.getElementById('paymentAmountDisplay');
+            const qrInstruction = document.getElementById('qrPriceInstruction');
+            const qrImage = document.getElementById('qrCodeImage');
+
+            // Update modal title
+            title.textContent = `${currentWebsiteType} - ${sampleName} (${price} ₹) ऑर्डर`;
+
+            // Update price display
+            if (priceDisplay) {
+                priceDisplay.textContent = `₹${price}`;
+            }
+
+            // Update instruction text dynamically
+            if (qrInstruction) {
+                qrInstruction.innerHTML = `
+                    ध्यान दें: यह एक प्लेसहोल्डर QR कोड है। आपको अपने "Fame Pay App" QR कोड का URL इस \`src\` टैग में बदलना होगा। <br>
+                    सुनिश्चित करें कि आप **₹${price}** का भुगतान कर रहे हैं।
+                `;
+            }
+
+            // Update QR code placeholder text for clarity (If user uses placeholder)
+            const placeholderText = encodeURIComponent(`Fame Pay QR Code: ${price} Rupees`);
+            // Only update if the user has not replaced it with a real URL yet.
+            if (qrImage.src.includes("placehold.co")) {
+                 qrImage.src = `https://placehold.co/300x300/10B981/ffffff?text=${placeholderText}`;
+            }
+            
+            openModal('paymentModal');
+        }
+
+        function handlePaymentDone() {
+            // Close the payment modal first
+            closeModal('paymentModal');
+
+            // Pre-filled WhatsApp message uses the dynamically set global variables
+            const message = encodeURIComponent(`नमस्ते, मैंने आपकी "${currentWebsiteType}" के लिए "${currentSampleName}" (₹${currentPrice}) ऑर्डर का पेमेंट कर दिया है। यह स्क्रीनशॉट भेजने के लिए है।`);
+
+            // WhatsApp link to open
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+            // Open WhatsApp page
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // --- Event Listeners for Closing Modals by clicking outside ---
+        window.onclick = function(event) {
+            const samplesModal = document.getElementById('samplesModal');
+            const paymentModal = document.getElementById('paymentModal');
+
+            if (event.target === samplesModal) {
+                closeModal('samplesModal');
+            }
+            if (event.target === paymentModal) {
+                closeModal('paymentModal');
+            }
+        }
+        
+        // This function is used to show a message box instead of alert()
+        function alert(message) {
+            const customAlert = document.createElement('div');
+            customAlert.style.cssText = `
+                position: fixed; top: 20%; left: 50%; transform: translate(-50%, -50%);
+                background: #ef4444; color: white; padding: 20px; border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 10001; text-align: center;
+                max-width: 90%;
+            `;
+            customAlert.innerHTML = `
+                <p>${message}</p>
+                <button onclick="this.parentNode.remove()" style="margin-top: 10px; background: #be123c; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">बंद करें</button>
+            `;
+            document.body.appendChild(customAlert);
+        }
+        
+    </script>
+</body>
+</html>
+
